@@ -20,7 +20,7 @@ export GOARCH := $(NDK_GO_ARCH_MAP_$(ANDROID_ARCH_NAME))
 export GOOS := android
 export CGO_ENABLED := 1
 
-GO_VERSION := 1.21.3
+GO_VERSION := 1.23.1
 GO_PLATFORM := $(shell uname -s | tr '[:upper:]' '[:lower:]')-$(NDK_GO_ARCH_MAP_$(shell uname -m))
 GO_TARBALL := go$(GO_VERSION).$(GO_PLATFORM).tar.gz
 GO_HASH_darwin-amd64 := 27014fc69e301d7588a169ca239b3cc609f0aa1abf38528bf0d20d3b259211eb
