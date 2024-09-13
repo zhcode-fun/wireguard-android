@@ -26,6 +26,11 @@ android {
         versionCode = providers.gradleProperty("wireguardVersionCode").get().toInt()
         versionName = providers.gradleProperty("wireguardVersionName").get()
         buildConfigField("int", "MIN_SDK_VERSION", minSdk.toString())
+
+        ndk {
+            abiFilters.add("arm64-v8a")
+//            abiFilters.add("armeabi-v7a")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
