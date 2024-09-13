@@ -1,6 +1,6 @@
 ## Endpoint 添加srv记录和txt记录支持
 
-下载：[Release](https://github.com/zhcode-fun/wireguard-windows/releases)
+下载：[Release](https://github.com/zhcode-fun/wireguard-android/releases)
 
 + srv记录：设置端口号为0，例如
   
