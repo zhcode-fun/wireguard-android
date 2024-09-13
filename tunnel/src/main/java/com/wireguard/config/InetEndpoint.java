@@ -7,6 +7,14 @@ package com.wireguard.config;
 
 import com.wireguard.util.NonNullForAll;
 
+import org.xbill.DNS.Lookup;
+import org.xbill.DNS.Name;
+import org.xbill.DNS.Record;
+import org.xbill.DNS.SRVRecord;
+import org.xbill.DNS.SimpleResolver;
+import org.xbill.DNS.TextParseException;
+import org.xbill.DNS.Type;
+
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.URI;
@@ -94,18 +102,47 @@ public final class InetEndpoint {
             //TODO(zx2c4): Implement a real timeout mechanism using DNS TTL
             if (Duration.between(lastResolution, Instant.now()).toMinutes() > 1) {
                 try {
-                    // Prefer v4 endpoints over v6 to work around DNS64 and IPv6 NAT issues.
-                    final InetAddress[] candidates = InetAddress.getAllByName(host);
-                    InetAddress address = candidates[0];
-                    for (final InetAddress candidate : candidates) {
-                        if (candidate instanceof Inet4Address) {
-                            address = candidate;
-                            break;
+                    if (port == 0) {
+                        // srv记录
+                        final Lookup lookup = new Lookup(Name.fromString(host), Type.SRV);
+                        lookup.setResolver(new SimpleResolver("114.114.114.114"));
+                        final Record[] records = lookup.run();
+                        if (lookup.getResult() == Lookup.SUCCESSFUL && records.length > 0) {
+                            final SRVRecord srvRecord = (SRVRecord) records[0];
+                            final Name targetName = srvRecord.getTarget();
+                            final InetAddress[] candidates = InetAddress.getAllByName(targetName.toString());
+                            InetAddress address = candidates[0];
+                            for (final InetAddress candidate : candidates) {
+                                if (candidate instanceof Inet4Address) {
+                                    address = candidate;
+                                    break;
+                                }
+                            }
+                            final String addressString = address.getHostAddress();
+                            if (addressString != null) {
+                                System.out.println("======================srv记录==" + addressString + ':' + String.valueOf(srvRecord.getPort()));
+                                resolved = new InetEndpoint(addressString, true, srvRecord.getPort());
+                            }
+                        }
+                    } else if (port == 1) {
+                        // txt记录
+                    } else {
+                        // Prefer v4 endpoints over v6 to work around DNS64 and IPv6 NAT issues.
+                        final InetAddress[] candidates = InetAddress.getAllByName(host);
+                        InetAddress address = candidates[0];
+                        for (final InetAddress candidate : candidates) {
+                            if (candidate instanceof Inet4Address) {
+                                address = candidate;
+                                break;
+                            }
+                        }
+                        final String addressString = address.getHostAddress();
+                        if (addressString != null) {
+                            resolved = new InetEndpoint(addressString, true, port);
                         }
                     }
-                    resolved = new InetEndpoint(address.getHostAddress(), true, port);
                     lastResolution = Instant.now();
-                } catch (final UnknownHostException e) {
+                } catch (final UnknownHostException | TextParseException e) {
                     resolved = null;
                 }
             }
