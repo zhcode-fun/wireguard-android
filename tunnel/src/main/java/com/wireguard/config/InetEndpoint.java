@@ -5,8 +5,6 @@
 
 package com.wireguard.config;
 
-import android.widget.Toast;
-
 import com.wireguard.util.NonNullForAll;
 
 import org.xbill.DNS.Lookup;
@@ -25,14 +23,10 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
-
-import static com.wireguard.android.BR.endpoint;
-import static com.wireguard.android.BR.endpoint;
 
 
 /**
@@ -150,7 +144,7 @@ public final class InetEndpoint {
                             if (Pattern.matches(IP_PORT_REGEX, recordValue)) {
                                 final String[] hostPort = Pattern.compile(":").split(recordValue);
                                 final int resPort = Integer.parseInt(hostPort[1], 10);
-                                if (resPort > 0 && resPort <=65535) {
+                                if (resPort > 0 && resPort <= 65535) {
                                     resolved = new InetEndpoint(hostPort[0], true, resPort);
                                 }
                             }
