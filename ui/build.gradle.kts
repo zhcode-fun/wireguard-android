@@ -37,11 +37,22 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
     }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("buildsign.jks")
+            storePassword = ""
+            keyAlias = "wireguard"
+            keyPassword = ""
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles("proguard-android-optimize.txt")
+            signingConfig = signingConfigs.getByName("release")
             packaging {
                 resources {
                     excludes += "DebugProbesKt.bin"
