@@ -105,6 +105,8 @@ public final class InetEndpoint {
                     if (port == 0) {
                         // srv记录
                         final Lookup lookup = new Lookup(Name.fromString(host), Type.SRV);
+                        // 禁用缓存
+                        lookup.setCache(null);
                         lookup.setResolver(new SimpleResolver("114.114.114.114"));
                         final Record[] records = lookup.run();
                         if (lookup.getResult() == Lookup.SUCCESSFUL && records.length > 0) {
