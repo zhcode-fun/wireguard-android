@@ -1,3 +1,25 @@
+## Endpoint 添加srv记录和txt记录支持
+
+下载：[Release](https://github.com/zhcode-fun/wireguard-windows/releases)
+
++ srv记录：设置端口号为0，例如
+  
+```
+Endpoint = srv.wg.xxxx.com:0
+```
+
++ txt记录：设置端口号为1，例如
+
+```
+Endpoint = txt.wg.xxxx.com:1
+```
+text记录值可以是纯`ip:port`，也可以在后面添加其他备注，以`||`分割，如`1.1.1.1:6789 || 更新于2024-09-12 20:30:00`
+
+
+---
+---
+
+
 # Android GUI for [WireGuard](https://www.wireguard.com/)
 
 **[Download from the Play Store](https://play.google.com/store/apps/details?id=com.wireguard.android)**
