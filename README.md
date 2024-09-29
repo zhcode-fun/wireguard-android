@@ -19,6 +19,45 @@ text记录值可以是纯`ip:port`，也可以在后面添加其他备注，以`
 ---
 ---
 
+## 自编译
+
+> 前提：
+> 只能在linux或macos下构建，建议linux，macos没试过
+> 推荐JDK版本：jdk-17
+
+1. 拉代码
+
+```bash
+git clone -b dev-v1.0.20231018.1 https://github.com/zhcode-fun/wireguard-android.git
+cd wireguard-android
+# 拉取子仓库代码
+git submodule init
+git submodule update
+```
+
+2. 创建jks签名文件，比如创建`buildsign.jks`，放在ui文件夹下：
+
+```bash
+keytool -genkey -v -keystore ui/buildsign.jks -keyalg RSA -keysize 2048 -validity 10000 -alias wireguard
+```
+
+3. 修改`ui/build.gradle.kts`中的`storePassword`和`keyPassword`
+
+4. 打包命令
+
+```bash
+./gradlew clean assembleRelease
+```
+
+5. 构建成功后apk路径
+
+```
+ui/build/outputs/apk/release/ui-release.apk
+```
+
+---
+---
+
 
 # Android GUI for [WireGuard](https://www.wireguard.com/)
 
