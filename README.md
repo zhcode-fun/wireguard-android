@@ -22,7 +22,7 @@ text记录值可以是纯`ip:port`，也可以在后面添加其他备注，以`
 ## 自编译
 
 > 前提：
-> 只能在linux或macos下构建，建议linux，macos没试过
+> 只能在linux或macos下构建，建议linux，macos没试过<br/>
 > 推荐JDK版本：jdk-17
 
 1. 拉代码
