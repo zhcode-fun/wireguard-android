@@ -135,6 +135,19 @@ class TunnelDetailFragment : BaseFragment(), MenuProvider {
                     peer.latestHandshakeLabel.visibility = View.VISIBLE
                     peer.latestHandshakeText.visibility = View.VISIBLE
                 }
+                if (peerStats == null || tunnel.config == null || tunnel.config!!.peers.size == 0) {
+                    peer.resolveAddressLabel.visibility = View.GONE
+                    peer.resolveAddressText.visibility = View.GONE
+                } else {
+                    val resolvedInetPoint = tunnel.config!!.peers[0].endpoint.get().resolved
+                    var resolvedAddr = "Endpoint resolve fail!!!"
+                    if (!resolvedInetPoint.isEmpty) {
+                        resolvedAddr = "${resolvedInetPoint.get().host}:${resolvedInetPoint.get().port}"
+                    }
+                    peer.resolveAddressText.text = resolvedAddr
+                    peer.resolveAddressLabel.visibility = View.VISIBLE
+                    peer.resolveAddressText.visibility = View.VISIBLE
+                }
             }
         } catch (e: Throwable) {
             for (i in 0 until binding.peersLayout.childCount) {

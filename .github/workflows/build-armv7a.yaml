@@ -1,0 +1,47 @@
+name: build-armv7a
+
+on:
+   workflow_dispatch:
+    inputs:
+      password:
+        description: '请输入签名证书密码：（不支持中文密码，且最少6位字符）'
+        required: false
+        default: 'password'
+env:
+  password: "${{ github.event.inputs.password }}"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查仓库
+        uses: actions/checkout@v4
+        with:
+        #  repository: zhcode-fun/wireguard-android #使用zhcode-fun大佬的wireguard-android仓库
+         ref: dev-v1.0.20231018
+         submodules: true
+      - name: 设置JDK环境
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: 17
+      - name: 构建 APK
+        run: |
+          sed -i 's/arm64-v8a/armeabi-v7a/g' ./ui/build.gradle.kts
+          sed -i 's/arm64-v8a/armeabi-v7a/g' ./tunnel/build.gradle.kts
+          bash ./gradlew assembleRelease
+      - name: 签名
+        run: |
+          mkdir -p /opt/wg
+          mv ./ui/build/outputs/apk/release/ui-release-unsigned.apk /opt/wg/app-release-unsigned.apk
+          cd /opt/wg
+          # 生成签名文件keystore.jks
+          keytool -genkey -v -keystore keystore.jks -storepass $password -alias key -keypass $password -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android, OU=Android, O=Android, L=BeiJing, ST=BeiJing, C=CN"
+          # 启用谷歌v1 v2 v3 v4 签名方式同时签名
+          /usr/local/lib/android/sdk/build-tools/34.0.0/apksigner sign --ks keystore.jks --ks-key-alias key --ks-pass pass:$password --key-pass pass:$password --out wireguard-android.apk --in app-release-unsigned.apk --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --v4-signing-enabled true
+          rm app-release-unsigned.apk
+      - name : 上传
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+         name: wireguard-apk
+         path: /opt/wg/*

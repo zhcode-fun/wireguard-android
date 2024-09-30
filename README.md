@@ -21,6 +21,10 @@ text记录值可以是纯`ip:port`，也可以在后面添加其他备注，以`
 
 ## 自编译
 
+### 方式一：fork本仓库，使用github action打包，感谢[@lmq8267](https://github.com/lmq8267)编写的action脚本
+
+### 方法二：自己机器打包
+
 > 前提：
 > 只能在linux或macos下构建，建议linux，macos没试过<br/>
 > 推荐JDK版本：jdk-17
@@ -28,7 +32,7 @@ text记录值可以是纯`ip:port`，也可以在后面添加其他备注，以`
 1. 拉代码
 
 ```bash
-git clone -b dev-v1.0.20231018.1 https://github.com/zhcode-fun/wireguard-android.git
+git clone -b dev-v1.0.20231018 https://github.com/zhcode-fun/wireguard-android.git
 cd wireguard-android
 # 拉取子仓库代码
 git submodule init

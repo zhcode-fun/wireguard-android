@@ -144,6 +144,30 @@
                 tools:text="192.168.0.1:51820" />
 
             <TextView
+                android:id="@+id/resolve_address_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:labelFor="@+id/resolve_address_text"
+                android:text="@string/resolve_address"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/endpoint_text" />
+
+            <TextView
+                android:id="@+id/resolve_address_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/resolve_address"
+                android:onClick="@{ClipboardUtils::copyTextView}"
+                android:text="@{item.endpoint}"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/resolve_address_label"
+                tools:text="Endpoint resolve fail!!!" />
+
+            <TextView
                 android:id="@+id/persistent_keepalive_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
