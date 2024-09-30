@@ -173,7 +173,7 @@
                 android:text="@string/persistent_keepalive"
                 android:visibility="@{!item.persistentKeepalive.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/endpoint_text" />
+                app:layout_constraintTop_toBottomOf="@+id/resolve_address_text" />
 
             <TextView
                 android:id="@+id/persistent_keepalive_text"
