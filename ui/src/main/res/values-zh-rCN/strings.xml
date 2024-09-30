@@ -159,6 +159,7 @@
     <string name="parse_error_generic">字符串</string>
     <string name="parse_error_inet_address">\u0020IP 地址</string>
     <string name="parse_error_inet_endpoint">对端</string>
+    <string name="resolve_address">对端解析地址</string>
     <string name="parse_error_inet_network">\u0020IP 网络</string>
     <string name="parse_error_integer">数字</string>
     <string name="parse_error_reason">无法解析%1$s “%2$s”\u0020</string>

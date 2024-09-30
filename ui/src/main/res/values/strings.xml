@@ -120,6 +120,7 @@
     <string name="dns_search_domains">Search domains</string>
     <string name="edit">Edit</string>
     <string name="endpoint">Endpoint</string>
+    <string name="resolve_address">Resolved address</string>
     <string name="error_down">Error bringing down tunnel: %s</string>
     <string name="error_fetching_apps">Error fetching apps list: %s</string>
     <string name="error_root">Please obtain root access and try again</string>
