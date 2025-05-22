@@ -1,3 +1,68 @@
+## Endpoint 添加srv记录和txt记录支持
+
+下载：[Release](https://github.com/zhcode-fun/wireguard-android/releases)
+
++ srv记录：设置端口号为0，例如
+  
+```
+Endpoint = srv.wg.xxxx.com:0
+```
+
++ txt记录：设置端口号为1，例如
+
+```
+Endpoint = txt.wg.xxxx.com:1
+```
+text记录值可以是纯`ip:port`，也可以在后面添加其他备注，以`||`分割，如`1.1.1.1:6789 || 更新于2024-09-12 20:30:00`
+
+
+---
+---
+
+## 自编译
+
+### 方式一：fork本仓库，使用github action打包，感谢[@lmq8267](https://github.com/lmq8267)编写的action脚本
+
+### 方法二：自己机器打包
+
+> 前提：
+> 只能在linux或macos下构建，建议linux，macos没试过<br/>
+> 推荐JDK版本：jdk-17
+
+1. 拉代码
+
+```bash
+git clone -b dev-v1.0.20231018 https://github.com/zhcode-fun/wireguard-android.git
+cd wireguard-android
+# 拉取子仓库代码
+git submodule init
+git submodule update
+```
+
+2. 创建jks签名文件，比如创建`buildsign.jks`，放在ui文件夹下：
+
+```bash
+keytool -genkey -v -keystore ui/buildsign.jks -keyalg RSA -keysize 2048 -validity 10000 -alias wireguard
+```
+
+3. 修改`ui/build.gradle.kts`中的`storePassword`和`keyPassword`
+
+4. 打包命令
+
+```bash
+./gradlew clean assembleRelease
+```
+
+5. 构建成功后apk路径
+
+```
+ui/build/outputs/apk/release/ui-release.apk
+```
+
+---
+---
+
+
 # Android GUI for [WireGuard](https://www.wireguard.com/)
 
 **[Download from the Play Store](https://play.google.com/store/apps/details?id=com.wireguard.android)**

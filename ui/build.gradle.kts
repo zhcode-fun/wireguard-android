@@ -26,17 +26,33 @@ android {
         versionCode = providers.gradleProperty("wireguardVersionCode").get().toInt()
         versionName = providers.gradleProperty("wireguardVersionName").get()
         buildConfigField("int", "MIN_SDK_VERSION", minSdk.toString())
+
+        ndk {
+            abiFilters.add("arm64-v8a")
+//            abiFilters.add("armeabi-v7a")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
     }
+
+    /* signingConfigs {
+        create("release") {
+            storeFile = file("buildsign.jks")
+            storePassword = ""
+            keyAlias = "wireguard"
+            keyPassword = ""
+        }
+    } */
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles("proguard-android-optimize.txt")
+            // signingConfig = signingConfigs.getByName("release")
             packaging {
                 resources {
                     excludes += "DebugProbesKt.bin"
