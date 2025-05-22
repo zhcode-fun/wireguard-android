@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 36
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -39,6 +39,7 @@ android {
                 cmake {
                     targets("libwg-go.so", "libwg.so", "libwg-quick.so")
                     arguments("-DGRADLE_USER_HOME=${project.gradle.gradleUserHomeDir}")
+                    arguments("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
                 }
             }
         }
@@ -87,30 +88,30 @@ publishing {
                 from(components["release"])
             }
             pom {
-                name.set("WireGuard Tunnel Library")
-                description.set("Embeddable tunnel library for WireGuard for Android")
-                url.set("https://www.wireguard.com/")
+                name = "WireGuard Tunnel Library"
+                description = "Embeddable tunnel library for WireGuard for Android"
+                url = "https://www.wireguard.com/"
 
                 licenses {
                     license {
-                        name.set("The Apache Software License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        distribution.set("repo")
+                        name = "The Apache Software License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        distribution = "repo"
                     }
                 }
                 scm {
-                    connection.set("scm:git:https://git.zx2c4.com/wireguard-android")
-                    developerConnection.set("scm:git:https://git.zx2c4.com/wireguard-android")
-                    url.set("https://git.zx2c4.com/wireguard-android")
+                    connection = "scm:git:https://git.zx2c4.com/wireguard-android"
+                    developerConnection = "scm:git:https://git.zx2c4.com/wireguard-android"
+                    url = "https://git.zx2c4.com/wireguard-android"
                 }
                 developers {
                     organization {
-                        name.set("WireGuard")
-                        url.set("https://www.wireguard.com/")
+                        name = "WireGuard"
+                        url = "https://www.wireguard.com/"
                     }
                     developer {
-                        name.set("WireGuard")
-                        email.set("team@wireguard.com")
+                        name = "WireGuard"
+                        email = "team@wireguard.com"
                     }
                 }
             }

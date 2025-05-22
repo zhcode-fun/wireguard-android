@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 36
     buildFeatures {
         buildConfig = true
         dataBinding = true
@@ -22,7 +22,7 @@ android {
     defaultConfig {
         applicationId = pkg
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 36
         versionCode = providers.gradleProperty("wireguardVersionCode").get().toInt()
         versionName = providers.gradleProperty("wireguardVersionName").get()
         buildConfigField("int", "MIN_SDK_VERSION", minSdk.toString())
@@ -105,5 +105,5 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+    compilerOptions.jvmTarget = JvmTarget.JVM_17
 }

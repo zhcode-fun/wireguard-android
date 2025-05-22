@@ -8,12 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.TunnelCreatorActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/list_detail_container"
-        android:name="com.wireguard.android.fragment.TunnelListFragment"
+    <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/editor_fragment"
+        android:name="com.wireguard.android.fragment.TunnelEditorFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="LIST" />
+        android:layout_height="match_parent" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

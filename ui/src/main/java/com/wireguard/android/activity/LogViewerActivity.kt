@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017-2023 WireGuard LLC. All Rights Reserved.
+ * Copyright © 2017-2025 WireGuard LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -353,7 +353,7 @@ class LogViewerActivity : AppCompatActivity() {
         override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? =
             logForUri(uri)?.let {
                 val m = MatrixCursor(arrayOf(android.provider.OpenableColumns.DISPLAY_NAME, android.provider.OpenableColumns.SIZE), 1)
-                m.addRow(arrayOf("wireguard-log.txt", it.size.toLong()))
+                m.addRow(arrayOf<Any>("wireguard-log.txt", it.size.toLong()))
                 m
             }
 

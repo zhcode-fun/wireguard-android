@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017-2023 WireGuard LLC. All Rights Reserved.
+ * Copyright © 2017-2025 WireGuard LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package com.wireguard.android.activity
@@ -50,10 +50,14 @@ class TunnelToggleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
             if (Application.getBackend() is GoBackend) {
-                val intent = GoBackend.VpnService.prepare(this@TunnelToggleActivity)
-                if (intent != null) {
-                    permissionActivityResultLauncher.launch(intent)
-                    return@launch
+                try {
+                    val intent = GoBackend.VpnService.prepare(this@TunnelToggleActivity)
+                    if (intent != null) {
+                        permissionActivityResultLauncher.launch(intent)
+                        return@launch
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this@TunnelToggleActivity, ErrorMessages[e], Toast.LENGTH_LONG).show()
                 }
             }
             toggleTunnelWithPermissionsResult()

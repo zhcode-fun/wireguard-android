@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017-2023 WireGuard LLC. All Rights Reserved.
+ * Copyright © 2017-2025 WireGuard LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package com.wireguard.android.updater
@@ -376,12 +376,12 @@ object Updater {
         if (installerIsGooglePlay(context))
             return
 
-        if (!if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        if (if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 @Suppress("DEPRECATION")
                 context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS)
             } else {
                 context.packageManager.getPackageInfo(context.packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_PERMISSIONS.toLong()))
-            }.requestedPermissions.contains(Manifest.permission.REQUEST_INSTALL_PACKAGES)
+            }.requestedPermissions?.contains(Manifest.permission.REQUEST_INSTALL_PACKAGES) != true
         ) {
             if (installer(context).isNotEmpty()) {
                 updaterScope.launch {
